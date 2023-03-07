@@ -1,0 +1,38 @@
+{
+  "name": "lint-integration",
+  "version": "0.0.1",
+  "description": "Eslint, Prettier, husky and lint-staged configuration.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "lint-integration": "index.js"
+  },
+  "author": {
+    "name": "Mehmet Sağır",
+    "email": "mehmetsagirdev@gmail.com",
+    "url": "https://mehmetsagir.com",
+    "github": "https://github.com/mehmetsagir"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mehmetsagir/lint-integration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mehmetsagir/lint-integration/issues"
+  },
+  "scripts": {},
+  "keywords": [
+    "eslint",
+    "prettier",
+    "husky",
+    "lint-staged",
+    "lint-config",
+    "Next.js"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "inquirer": "^9.1.4",
+    "nanospinner": "^1.1.0"
+  }
+}
