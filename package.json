@@ -1,11 +1,12 @@
 {
-  "name": "lint-integration",
+  "name": "lint-configure",
   "version": "0.0.1",
   "description": "Eslint, Prettier, husky and lint-staged configuration.",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "lint-integration": "index.js"
+    "lint-configure": "index.js",
+    "lint-configuration": "index.js"
   },
   "author": {
     "name": "Mehmet Sağır",
@@ -15,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mehmetsagir/lint-integration.git"
+    "url": "https://github.com/mehmetsagir/lint-configure.git"
   },
   "bugs": {
-    "url": "https://github.com/mehmetsagir/lint-integration/issues"
+    "url": "https://github.com/mehmetsagir/lint-configure/issues"
   },
   "scripts": {},
   "keywords": [
