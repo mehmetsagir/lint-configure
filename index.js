@@ -3,13 +3,6 @@ import { exec } from "child_process";
 import fs from "fs";
 import inquirer from "inquirer";
 import { createSpinner } from "nanospinner";
-import {
-  eslintConfig,
-  prettierConfig,
-  huskyPreCommitConfig,
-  lintStagedConfig,
-  vscodeSettings,
-} from "./constants.js";
 import chalk from "chalk";
 
 class LintConfig {
@@ -17,7 +10,7 @@ class LintConfig {
     this.config = {
       tailwindSupport: false,
       typescriptSupport: false,
-      useNPM: false,
+      useNPM: false
     };
   }
 
@@ -36,7 +29,7 @@ class LintConfig {
       message: "Do you use TailwindCSS?",
       default() {
         return true;
-      },
+      }
     });
     this.config.tailwindSupport = supportTailwind.value;
   }
@@ -48,7 +41,7 @@ class LintConfig {
       message: "Do you use TypeScript?",
       default() {
         return true;
-      },
+      }
     });
     this.config.typescriptSupport = supportTypeScript.value;
   }
@@ -58,7 +51,7 @@ class LintConfig {
       name: "value",
       type: "list",
       message: "Which one do you use?",
-      choices: ["npm", "yarn"],
+      choices: ["npm", "yarn"]
     });
     this.config.useNPM = usePackageManager.value === "npm";
   }
@@ -67,7 +60,7 @@ class LintConfig {
     const message = createSpinner("Removing old files...").start();
     exec(
       "rm -rf .husky lint-staged.config.js .prettirrc .prettierrc.json .prettierrc.js .eslintrc.js .eslintrc.json .eslintrc .vscode",
-      (err) => {
+      err => {
         if (err) {
           message.error({ text: "Error removing old files" });
           return;
@@ -89,7 +82,7 @@ class LintConfig {
       "eslint-plugin-simple-import-sort",
       "husky",
       "lint-staged",
-      "eslint-config-next",
+      "eslint-config-next"
     ];
 
     if (this.config.tailwindSupport) {
@@ -100,7 +93,7 @@ class LintConfig {
       this.config.useNPM ? "npm install" : "yarn add"
     } -D ${packages.join(" ")}`;
 
-    exec(command, (err) => {
+    exec(command, err => {
       if (err) {
         message.error({ text: "Error installing dependencies" });
         return;
@@ -116,14 +109,14 @@ class LintConfig {
     const scripts = [
       "npm set-script lint 'eslint --ext .js,.jsx,.ts,.tsx .'",
       "npm set-script 'lint:fix' 'eslint --ext .js,.jsx,.ts,.tsx . --fix'",
-      "npm set-script 'format' 'npx prettier --write .'",
+      "npm set-script 'format' 'npx prettier --write .'"
     ];
 
     if (this.config.typescriptSupport) {
       scripts.push("npm set-script 'type-check' 'tsc --noEmit'");
     }
 
-    exec(scripts.join(" && "), (err) => {
+    exec(scripts.join(" && "), err => {
       if (err) {
         message.error({ text: "Error setting scripts" });
         return;
@@ -136,38 +129,63 @@ class LintConfig {
   createFiles() {
     const message = createSpinner("Creating files...").start();
 
-    const handleError = (err) => {
+    const handleError = err => {
       if (err)
         message.error({
           text: `Error creating file: ${chalk.red(err.path)} \n ${chalk.red(
             err.message
-          )}`,
+          )}`
         });
       return;
     };
 
+    const createEslintConfiguration = () => {
+      const config = JSON.parse(
+        fs.readFileSync("./config/.eslintrc.json", "utf8")
+      );
+
+      if (this.config.typescriptSupport) {
+        config.extends.push("next");
+        config.extends.push("next/core-web-vitals");
+      }
+
+      if (this.config.tailwindSupport) {
+        config.plugins.push("tailwindcss");
+
+        config.rules["tailwindcss/classnames-order"] = "warn";
+        config.rules["tailwindcss/enforces-negative-arbitrary-values"] = "warn";
+        config.rules["tailwindcss/enforces-shorthand"] = "warn";
+        config.rules["tailwindcss/migration-from-tailwind-2"] = "warn";
+        config.rules["tailwindcss/no-arbitrary-value"] = "off";
+        config.rules["tailwindcss/no-custom-classname"] = "warn";
+        config.rules["tailwindcss/no-contradicting-classname"] = "error";
+      }
+
+      return JSON.stringify(config, null, 2);
+    };
+
     fs.writeFile(
       ".eslintrc.json",
-      JSON.stringify(eslintConfig(this.config.tailwindSupport)),
+      createEslintConfiguration(),
       "utf8",
       handleError
     );
 
     fs.writeFile(
       ".prettierrc.json",
-      JSON.stringify(prettierConfig),
+      fs.readFileSync("./config/.prettierrc.json"),
       "utf8",
       handleError
     );
 
     fs.writeFile(
       "lint-staged.config.js",
-      lintStagedConfig(),
+      fs.readFileSync("./config/lint-staged.config.js"),
       "utf8",
       handleError
     );
 
-    fs.mkdir(".vscode", { recursive: true }, (err) => {
+    fs.mkdir(".vscode", { recursive: true }, err => {
       if (err) {
         message.error({ text: "Error creating .vscode folder" });
         return;
@@ -175,7 +193,7 @@ class LintConfig {
 
       fs.writeFile(
         ".vscode/settings.json",
-        JSON.stringify(vscodeSettings),
+        fs.readFileSync("./config/vscode-settings.json"),
         "utf8",
         handleError
       );
@@ -188,7 +206,7 @@ class LintConfig {
   createHuskyConfig() {
     const message = createSpinner("Creating husky...").start();
 
-    exec("npx husky install", (err) => {
+    exec("npx husky install", err => {
       if (err) {
         message.error({ text: "Error creating husky" });
         return;
@@ -196,9 +214,9 @@ class LintConfig {
 
       fs.writeFile(
         ".husky/pre-commit",
-        huskyPreCommitConfig(this.config.typescriptSupport),
+        fs.readFileSync("./config/pre-commit"),
         "utf8",
-        (err) => {
+        err => {
           if (err) {
             message.error({ text: "Error creating husky" });
             return;
