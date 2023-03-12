@@ -1,6 +1,6 @@
 {
   "name": "lint-configure",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Eslint, Prettier, husky and lint-staged configuration.",
   "main": "index.js",
   "type": "module",
