@@ -4,7 +4,7 @@ import fs from "fs";
 import inquirer from "inquirer";
 import { createSpinner } from "nanospinner";
 import chalk from "chalk";
-import { removeOldFiles } from "./hooks/removeOldFiles";
+import { removeOldFiles } from "./hooks/removeOldFiles.js";
 
 const config = {
   tailwindSupport: false,
