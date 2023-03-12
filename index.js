@@ -8,17 +8,22 @@
 
 import cli from "./utils/cli.js";
 
-import LintConfig from "./lint-config.js";
+import { init } from "./init.js";
+import { removeOldFiles } from "./hooks/removeOldFiles.js";
 
 const input = cli.input;
 const flags = cli.flags;
 
-(async () => {
-  input.includes(`help`) && cli.showHelp();
+(() => {
+  input.includes("help") && cli.showHelp();
+
+  if (flags.clear || flags.c) {
+    return removeOldFiles();
+  }
 
   if (flags.version || flags.v) {
     cli.showVersion();
   }
 
-  new LintConfig().init();
+  init();
 })();
