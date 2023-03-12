@@ -2,16 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo 'Running Git Hooks'
-
-echo "🔎 Checking validity of types with TypeScript"
-
-yarn type-check || (
-    "\n⛔️ There is a type error in the code, fix it, and try commit again. ⛔️";
-    false;
-    )
-
-
-echo "\n✅ No TypeError found"
+{{typeCheck}}
 echo "\n🔎 Running linter.."
 
 yarn lint || (

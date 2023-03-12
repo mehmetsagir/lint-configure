@@ -118,10 +118,8 @@ function createFiles() {
       fs.readFileSync("./config/.eslintrc.json", "utf8")
     );
 
-    if (config.typescriptSupport) {
       config.extends.push("next");
       config.extends.push("next/core-web-vitals");
-    }
 
     if (config.tailwindSupport) {
       config.plugins.push("tailwindcss");
@@ -186,9 +184,21 @@ function createHuskyConfig() {
       return;
     }
 
+    const typeCheck = `
+echo "🔎 Checking validity of types with TypeScript"
+
+yarn type-check || (
+  "⛔️ There is a type error in the code, fix it, and try commit again. ⛔️";
+  false;
+)
+
+echo "\n✅ No TypeError found"`
+
+    const preCommit = fs.readFileSync("./config/pre-commit", "utf-8")
+
     fs.writeFile(
       ".husky/pre-commit",
-      fs.readFileSync("./config/pre-commit"),
+      preCommit.replace("{{typeCheck}}", config.typescriptSupport ? typeCheck : ""),
       "utf8",
       (err) => {
         if (err) {
