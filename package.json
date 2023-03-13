@@ -1,41 +1,41 @@
 {
-  "name": "lint-configure",
-  "version": "0.0.5",
-  "description": "Eslint, Prettier, husky and lint-staged configuration.",
-  "main": "index.js",
-  "type": "module",
-  "bin": {
-    "lint-configure": "index.js",
-    "lint-configuration": "index.js"
-  },
-  "author": {
-    "name": "Mehmet Sağır",
-    "email": "mehmetsagirdev@gmail.com",
-    "url": "https://mehmetsagir.com",
-    "github": "https://github.com/mehmetsagir"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mehmetsagir/lint-configure.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mehmetsagir/lint-configure/issues"
-  },
-  "scripts": {},
-  "keywords": [
-    "eslint",
-    "prettier",
-    "husky",
-    "lint-staged",
-    "lint-config",
-    "Next.js"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "chalk": "^5.2.0",
-    "cli-meow-help": "^3.1.0",
-    "inquirer": "^9.1.4",
-    "meow": "^11.0.0",
-    "nanospinner": "^1.1.0"
-  }
+    "name": "lint-configure",
+    "version": "0.0.5-3",
+    "description": "Eslint, Prettier, husky and lint-staged configuration.",
+    "main": "index.js",
+    "type": "module",
+    "bin": {
+        "lint-configure": "index.js",
+        "lint-configuration": "index.js"
+    },
+    "author": {
+        "name": "Mehmet Sağır",
+        "email": "mehmetsagirdev@gmail.com",
+        "url": "https://mehmetsagir.com",
+        "github": "https://github.com/mehmetsagir"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mehmetsagir/lint-configure.git"
+    },
+    "bugs": {
+        "url": "https://github.com/mehmetsagir/lint-configure/issues"
+    },
+    "scripts": {},
+    "keywords": [
+        "eslint",
+        "prettier",
+        "husky",
+        "lint-staged",
+        "lint-config",
+        "Next.js"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "chalk": "^5.2.0",
+        "cli-meow-help": "^3.1.0",
+        "inquirer": "^9.1.4",
+        "meow": "^11.0.0",
+        "nanospinner": "^1.1.0"
+    }
 }
